@@ -1,6 +1,6 @@
 @font-face {
   font-family: emoji;
-  src: local(-apple-system), url(https://ayuu.github.io/forgetfulgod-js13k2020/fonts/twemoji.ttf);
+  src: local(-apple-system), local(BlinkMacSystemFont), url(https://ayuu.github.io/forgetfulgod-js13k2020/fonts/twemoji.ttf);
 }
 
 * {
