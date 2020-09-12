@@ -99,6 +99,7 @@
         this.m[i] = 0
         const n = C.sprite({ y, x, w: CELL_SIZE, h: CELL_SIZE, d: CELL_SIZE, html: "🖲", css: "char" })
         this.playerStartPosition = { n, x: cx, y: cy, rz: 0 }
+        break
       default:
         let d = bd ? "d" : ""
         switch (cellType) {
