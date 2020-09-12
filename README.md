@@ -40,12 +40,13 @@ Controls:
 Special Thanks To:
 
 - xem aka Maxime EUZIERE (base of [CSS3D](https://github.com/xem/CSS3Dframework))
+- Twitter / xem ([support](https://github.com/xem/emoji)) ([twemoji](https://github.com/twitter/twemoji))
 - Frank Force ([ZzFX](https://github.com/KilledByAPixel/ZzFX))
 - Keith Clark ([ZzFXM](https://github.com/keithclark/ZzFXM))
 
 ---
 
-This game was made for the js13k2020 tournament and optimized for Chrome and
-Firefox.
+This game was made for the js13k2020 tournament and optimized for Chrome,
+Firefox and Safari.
 
 Enjoy!
