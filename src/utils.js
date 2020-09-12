@@ -62,3 +62,4 @@ const addDom = (innerHTML, className, onclick, parent, id) => {
   d.onclick = onclick
   parent.appendChild(d)
 }
+const getSoundIcon = () => (!sound ? "🔇" : "🔉")

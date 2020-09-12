@@ -21,7 +21,7 @@ function GameScreen() {
 
     gbar.style.display = "flex"
     gbar.innerHTML = ""
-    addDom(!sound ? "🔇" : "🔉", "keym", () => onkeydown({ code: "keym", _gui: true }), gbar, "soundbtn")
+    addDom(getSoundIcon(), "keym", () => onkeydown({ code: "keym", _gui: true }), gbar, "soundbtn")
     appendBtns(MOBILE_EXTRA, gbar)
   }
 

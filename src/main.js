@@ -36,8 +36,8 @@ onkeypress = onkeydown = e => {
     case "keym":
       zzfxV = 0
       const soundbtn = document.getElementById("soundbtn")
-      soundbtn && (soundbtn.innerHTML = sound ? "🔇" : "🔉")
       sound = !sound
+      soundbtn && (soundbtn.innerHTML = getSoundIcon())
       return Sounds.background()
     case "keyr":
       e.ctrlKey && e.preventDefault()
