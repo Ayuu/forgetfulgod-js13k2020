@@ -11,7 +11,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: emoji;
+  font-family: emoji, -apple-system;
   overflow: hidden;
   height: 100%;
   width: 100%;
@@ -52,7 +52,7 @@ body {
   visibility: hidden;
 }
 #scene {
-  font-family: emoji;
+  font-family: emoji, -apple-system;
   padding: 0;
   display: block;
   background: #fff;
@@ -128,7 +128,7 @@ pre.console {
   width: 8vmin;
 }
 #soundbtn {
-  font-family: emoji;
+  font-family: emoji, -apple-system;
 }
 
 .gui div:hover {
