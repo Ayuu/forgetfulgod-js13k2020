@@ -71,13 +71,15 @@
   box-shadow: 3vmin 3vmin 1vmin 4vmin #fff;
 }
 .d::after {
-  content: "";
-  border-radius: 50%;
   box-shadow: 3vmin 2vmin 1vmin 4vmin #fff;
 }
-
 .exit::after {
+  box-shadow: 3vmin 2vmin 1vmin 4vmin #0071db;
+}
+.exit::after,
+.d::after {
   content: "";
   border-radius: 50%;
-  box-shadow: 3vmin 2vmin 1vmin 4vmin #0071db;
+  position: absolute;
+  z-index: -1;
 }
