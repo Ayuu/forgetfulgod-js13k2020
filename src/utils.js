@@ -52,7 +52,8 @@ const levelFromCache = () => {
   return cache.level
 }
 
-const isMobileDevice = window.navigator.userAgent.toLowerCase().includes("mobi")
+const checkUserAgent = v => window.navigator.userAgent.toLowerCase().includes(v)
+const isMobileDevice = ["mobi", "android", "ios"].some(checkUserAgent)
 const addDom = (innerHTML, className, onclick, parent, id) => {
   const d = document.createElement("div")
   d.innerHTML = innerHTML
