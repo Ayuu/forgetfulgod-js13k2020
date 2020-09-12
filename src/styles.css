@@ -1,12 +1,6 @@
 @font-face {
   font-family: emoji;
-  src: url(https://ayuu.github.io/forgetfulgod-js13k2020/fonts/twemoji.eot);
-  src: url(https://ayuu.github.io/forgetfulgod-js13k2020/fonts/twemoji.eot?#iefix) format("embedded-opentype"),
-    url(https://ayuu.github.io/forgetfulgod-js13k2020/fonts/twemoji.otf) format("opentype"), url(https://ayuu.github.io/forgetfulgod-js13k2020/fonts/twemoji.svg) format("svg"),
-    url(https://ayuu.github.io/forgetfulgod-js13k2020/fonts/twemoji.ttf) format("truetype"), url(https://ayuu.github.io/forgetfulgod-js13k2020/fonts/twemoji.woff) format("woff"),
-    url(https://ayuu.github.io/forgetfulgod-js13k2020/fonts/twemoji.woff2) format("woff2");
-  font-weight: normal;
-  font-style: normal;
+  src: url(https://ayuu.github.io/forgetfulgod-js13k2020/fonts/twemoji.woff) format("woff"), url(https://ayuu.github.io/forgetfulgod-js13k2020/fonts/twemoji.ttf) format("ttf");
 }
 
 * {
