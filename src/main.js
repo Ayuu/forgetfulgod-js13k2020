@@ -19,11 +19,7 @@ ${screens[s].console ? screens[s].console() : ""}`
 
 onkeyup = ({ code }) => (kp[code] = false)
 
-onkeypress = onkeydown = e => {
-  const code = e.code
-  if (!e._gui && kp[code]) return
-  kp[code] = !e._gui
-
+processKey = code => {
   if (code === "F5") return window.location.reload()
   switch (code.toLowerCase()) {
     case "backquote":
@@ -40,11 +36,15 @@ onkeypress = onkeydown = e => {
       soundbtn && (soundbtn.innerHTML = getSoundIcon())
       return Sounds.background()
     case "keyr":
-      e.ctrlKey && e.preventDefault()
       return screens[s].init(true)
     default:
       return screens[s].proccesKeyUp(keyMap[code] || code)
   }
+}
+onkeydown = ({ code }) => {
+  if (kp[code]) return
+  kp[code] = true
+  processKey(code)
 }
 
 isMobileDevice && document.body.classList.add("mobile")

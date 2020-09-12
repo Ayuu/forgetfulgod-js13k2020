@@ -1,5 +1,5 @@
 const appendBtns = (btns, dom) => {
-  Object.keys(btns).forEach(code => addDom(btns[code], `key${code}`, () => onkeydown({ code, _gui: true }), dom))
+  Object.keys(btns).forEach(code => addDom(btns[code], `key${code}`, () => processKey(code), dom))
 }
 
 function GameScreen() {
@@ -21,7 +21,7 @@ function GameScreen() {
 
     gbar.style.display = "flex"
     gbar.innerHTML = ""
-    addDom(getSoundIcon(), "keym", () => onkeydown({ code: "keym", _gui: true }), gbar, "soundbtn")
+    addDom(getSoundIcon(), "keym", () => processKey("keym"), gbar, "soundbtn")
     appendBtns(MOBILE_EXTRA, gbar)
   }
 
