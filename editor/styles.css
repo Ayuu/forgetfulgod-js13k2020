@@ -1,0 +1,70 @@
+﻿body {
+  display: flex;
+  flex-direction: column;
+  margin: 4px;
+}
+#map {
+  display: flex;
+  flex-direction: column;
+  margin: 4px;
+}
+#map .row {
+  display: flex;
+  flex-direction: row;
+}
+
+#map .cell {
+  width: 16px;
+  height: 16px;
+  margin: 0px;
+  border: 1px solid #888;
+  background: #ccc;
+}
+
+input {
+  box-sizing: border-box;
+}
+
+#cell-type {
+  display: flex;
+  flex-direction: row;
+  background: #ccc;
+}
+
+.cell-type {
+  border: 2px solid #000;
+  border-radius: 4px;
+  width: min-content;
+  padding: 4px;
+  height: 16px;
+}
+.cell-type:hover {
+  cursor: pointer;
+}
+.cell-type.selected {
+  border: 2px solid #fff;
+}
+
+#colors {
+  padding: 4px 0;
+  background: #ccc;
+}
+.color-group {
+  width: 100%;
+  height: 20px;
+  display: block;
+  padding: 2px;
+}
+.color-block {
+  cursor: pointer;
+  border: 2px solid #fff;
+  width: 16px;
+  height: 16px;
+}
+.color-group.active .color-block {
+  border: 2px solid #000;
+}
+
+input {
+  margin: 2px 0;
+}

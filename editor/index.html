@@ -1,0 +1,220 @@
+﻿<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="stylesheet" type="text/css" href="../src/css3d.css" />
+    <meta name="monetization" content="$ilp.uphold.com/r3XrneeRrpQn" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Forgetful God - Editor</title>
+  </head>
+
+  <body>
+    <div id="input">
+      <input id="mapSize" type="number" />
+      <button onclick="onUpdateMap()">Update Map</button>
+      <button onclick="onExportMap()">Export Map</button>
+      <br />
+      <input id="mapToLoad" type="text" />
+      <button onclick="onLoadMap()">Load Map</button>
+    </div>
+    <div id="map"></div>
+    <div>
+      <input type="checkbox" id="door" />
+      <label for="door">Is Door</label>
+      Cell type
+      <div id="cell-type"></div>
+    </div>
+    <div id="colors">
+      <input type="text" id="colorInput" />
+      <input type="text" id="colorInput2" />
+      <div id="colorInput3" />
+    </div>
+
+    <script src="../src/cell.js"></script>
+    <script src="../src/css3d.js"></script>
+    <script src="../src/game_rules.js"></script>
+    <script type="text/javascript">
+      cellType = Object.keys(CELL)
+      COLOR = {
+        floor: "#ccd1d1",
+        wall: "#a93226",
+        hole: "#000000",
+        exit: "#f7dc6f",
+        player: "#ffffff"
+      }
+      CELL_REVERT = {}
+      Object.keys(CELL).forEach(c => (CELL_REVERT[CELL[c]] = c))
+      mapClicked = false
+      selectedCell = ""
+    </script>
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function(event) {
+        var colorPicker = document.getElementById("colors")
+        createColorBlock = color => {
+          if (colorPicker.querySelectorAll(`[data-hex="${color}"]`).length !== 0) return
+          const node = document.createElement("div")
+          const colorGroup = document.createElement("div")
+          colorGroup.classList.add("color-group")
+          const colorBlock = document.createElement("div")
+          colorBlock.dataset["hex"] = color
+          colorBlock.style.background = color
+          colorBlock.classList.add("color-block")
+          colorBlock.onclick = () => colorNodeToggle(color)
+          colorGroup.appendChild(colorBlock)
+          colorPicker.appendChild(colorGroup)
+        }
+        colorInput.onchange = e => {
+          let color = colorInput.value
+          if (color.startsWith("#") && (color.length === 4 || color.length === 7)) {
+            color = `#${color
+              .match(color.length < 5 ? thexRegex : shexRegex)
+              .map(b => hexColor(b))
+              .join("")}`.toLowerCase()
+            createColorBlock(color)
+            colorNodeToggle(color)
+          }
+        }
+        colorInput2.onchange = e => {
+          let color = colorInput2.value
+          colorInput3.innerHTML = ""
+          if (color.startsWith("#") && (color.length === 4 || color.length === 7)) {
+            color = `#${color
+              .match(color.length < 5 ? thexRegex : shexRegex)
+              .map(b => hexColor(b))
+              .join("")}`.toLowerCase()
+            createColorBlock(color)
+            mc = addRGB(colorInput.value, color).toLowerCase()
+            createColorBlock(mc)
+            colorInput3.innerHTML = `Merged Color: ${mc}`
+            colorNodeToggle(mc)
+          }
+        }
+
+        const colorNodeToggle = (newColor, override) => {
+          if (!override && COLOR[selectedCell]) return
+          bg = newColor
+          const active = colorPicker.getElementsByClassName("active")
+          active.length && active[0].classList.toggle("active")
+          const node = colorPicker.querySelectorAll(`[data-hex="${newColor}"]`)[0]
+          node.parentNode.classList.toggle("active")
+          colorInput.value = newColor
+        }
+
+        Object.keys(COLOR).forEach(c => createColorBlock(COLOR[c]))
+
+        ct = document.getElementById("cell-type")
+        cellType.forEach((key, i) => {
+          var node = document.createElement("div")
+          node.classList.add("cell-type")
+          node.innerHTML = `${key}`
+          if (key === "floor") {
+            node.classList.add("selected")
+            selectedCell = key
+            const color = COLOR[key]
+            colorNodeToggle(color, true)
+          }
+          node.onclick = e => {
+            selectedCell = key
+            const cells = [...document.getElementsByClassName("cell-type selected")]
+            cells.forEach(c => c.classList.remove("selected"))
+            node.classList.add("selected")
+            const color = COLOR[key]
+            if (color) {
+              colorNodeToggle(color, true)
+            }
+          }
+          ct.appendChild(node)
+        })
+      })
+    </script>
+    <script type="text/javascript">
+      maps = []
+
+      function swapCellType(idx, click) {
+        return e => {
+          e.preventDefault()
+          e.stopPropagation()
+          if (!mapClicked && !click) return
+          const uniqueColor = !!COLOR[selectedCell]
+          const cellValue = uniqueColor ? CELL[selectedCell] : `${CELL[selectedCell]}${door.checked ? "d" : ""}-${bg}`
+          if (maps[idx] !== cellValue) {
+            e.target.style = `background: ${bg};opacity: ${!uniqueColor && door.checked ? 0.5 : 1};`
+            maps[idx] = cellValue
+          } else {
+            e.target.style = `background: ${COLOR.floor};`
+            maps[idx] = CELL.floor
+          }
+        }
+      }
+
+      function createMapCell(i, style) {
+        var node = document.createElement("div")
+        node.classList.add("cell")
+        node.style = style
+        node.onclick = swapCellType(i, true)
+        node.onmouseover = swapCellType(i)
+        node.onmousedown = e => (mapClicked = true)
+        node.onmouseup = e => (mapClicked = false)
+        return node
+      }
+
+      function onLoadMap() {
+        const load = JSON.parse(mapToLoad.value || "[]")
+        if (load < 25) return
+        maps = load
+        const size = Math.sqrt(maps.length)
+        map.innerHTML = ""
+        let currentRow = null
+        for (var i = 0; i < maps.length; i++) {
+          if (i % size === 0) {
+            var row = document.createElement("div")
+            row.classList.add("row")
+            map.appendChild(row)
+            currentRow = row
+          }
+          const cell = maps[i]
+          const scell = `${cell}`.split("-")
+          const isDoor = scell.length > 1 ? scell[0][scell[0].length - 1] === "d" : false
+          const color = COLOR[CELL_REVERT[cell]] ? COLOR[CELL_REVERT[cell]] : scell[1]
+          if (color.startsWith("#")) {
+            createColorBlock(color)
+          }
+          const style = `background: ${color};opacity: ${isDoor ? 0.5 : 1};`
+          const node = createMapCell(i, style)
+          currentRow.appendChild(node)
+        }
+      }
+
+      function onUpdateMap() {
+        const size = mapSize.value
+        if (size > 4) {
+          maps = []
+          map.innerHTML = ""
+          for (var j = 0; j < size; j++) {
+            var row = document.createElement("div")
+            row.classList.add("row")
+            map.appendChild(row)
+            for (var i = 0; i < size; i++) {
+              maps.push(CELL.floor)
+              const i = maps.length - 1
+              const style = `background: ${bg};`
+              const node = createMapCell(i, style)
+              row.appendChild(node)
+            }
+          }
+        }
+      }
+      function onExportMap() {
+        const el = document.createElement("textarea")
+        el.value = JSON.stringify(maps)
+        el.setAttribute("readonly", "")
+        el.style.position = "absolute"
+        el.style.left = "-9999px"
+        document.body.appendChild(el)
+        el.select()
+        document.execCommand("copy")
+        document.body.removeChild(el)
+      }
+    </script>
+  </body>
+</html>

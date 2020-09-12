@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+}
+.plane,
+.sprite,
+.group {
+  transition: 0.1s linear;
+}
+.triangle {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.triangle-bottom {
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.triangle-left {
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+}
+.triangle-right {
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.triangle-top-left {
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+.triangle-top-right {
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+.triangle-bottom-left {
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+.triangle-bottom-right {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+.circle {
+  border-radius: 50%;
+  border: 0;
+}
+.origin-top {
+  transform-origin: top center;
+}
+.floor {
+  background: #9b7653;
+  background: linear-gradient(to bottom, #9b7653 0%, #8c6744 100%);
+  z-index: -1;
+  border-radius: 5%;
+}
+
+.plane .inner {
+  filter: brightness(65%);
+  box-shadow: none !important;
+}
+
+.pyramid .right,
+.pyramid .left {
+  filter: brightness(65%);
+}
+
+.cube .left,
+.cube .right,
+.cube .front,
+.cube .back {
+  filter: brightness(65%);
+}
+
+.d {
+  opacity: 0.85;
+}
+.pyramid.d::after {
+  box-shadow: 3vmin 3vmin 1vmin 4vmin #fff;
+}
+.sphere.d::after {
+  box-shadow: 3vmin 3vmin 1vmin 4vmin #fff;
+}
+.d::after {
+  content: "";
+  border-radius: 50%;
+  box-shadow: 3vmin 2vmin 1vmin 4vmin #fff;
+}
+
+.exit::after {
+  content: "";
+  border-radius: 50%;
+  box-shadow: 3vmin 2vmin 1vmin 4vmin #0071db;
+}
