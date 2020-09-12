@@ -21,7 +21,7 @@
     C.plane({
       x: ((this.l - 1) * CELL_SIZE) / 2,
       y: ((this.l - 1) * CELL_SIZE) / 2,
-      z: 0,
+      z: -2,
       w: this.l * CELL_SIZE * 2,
       h: this.l * CELL_SIZE * 2,
       css: "floor"
