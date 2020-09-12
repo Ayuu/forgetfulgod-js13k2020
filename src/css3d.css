@@ -82,4 +82,5 @@
   border-radius: 50%;
   position: absolute;
   transform: translateZ(-1vmin);
+  z-index: -1;
 }
