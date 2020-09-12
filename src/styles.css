@@ -277,8 +277,8 @@ pre.console {
   visibility: hidden;
   border-radius: 2vmin;
   color: white;
-  font-size: 4vmin;
-  line-height: 6vmin;
+  font-size: 3vmin;
+  line-height: 4vmin;
   padding: 2vmin;
   text-align: center;
 }
