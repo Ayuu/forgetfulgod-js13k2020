@@ -19,8 +19,7 @@ const round = (v, d) => Math.round(v * d) / d
 
 hex2rgb = v => {
   var b1 = v.match(v.length < 5 ? thexRegex : shexRegex)
-  c = b1.map(c => `${round(hex2dec(hexColor(c)) / 255, 2)}`)
-  return c
+  return b1.map(c => `${hex2dec(hexColor(c))}`)
 }
 
 addRGB = (c1, c2) => {
