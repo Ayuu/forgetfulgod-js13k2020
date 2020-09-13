@@ -1,5 +1,11 @@
 const isCoilMember = () => document.monetization && document.monetization.state === "started"
 
+if (document.monetization) {
+  document.monetization.addEventListener("monetizationstart", () => {
+    if (s === GAME_SCREEN) Coil.initLevel()
+  })
+}
+
 Coil = {
   initLevel: () => {
     fog.classList.remove(...fog.classList)
