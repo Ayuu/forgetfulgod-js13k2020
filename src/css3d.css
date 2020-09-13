@@ -98,7 +98,7 @@
   right: 25%;
   bottom: 25%;
   z-index: 1;
-  transform: translateZ(5vmin);
+  transform: translateZ(8vmin);
 }
 
 .accessibility .annotate {
