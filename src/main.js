@@ -29,6 +29,11 @@ processKey = code => {
       if (s !== GAME_SCREEN) return
       consoleDom.classList.contains("visible") && toggleConsole()
       return overlay.classList.toggle("visible")
+    case "keyi":
+      if (s !== GAME_SCREEN) return
+      consoleDom.classList.contains("visible") && toggleConsole()
+      overlay.classList.remove("visible")
+      return Accessibility.toggle()
     case "keym":
       zzfxV = 0
       const soundbtn = document.getElementById("soundbtn")

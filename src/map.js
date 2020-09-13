@@ -16,6 +16,9 @@
     C.plane_count = 0
     C.cube_count = 0
     C.pyramid_count = 0
+    C.sphere_count = 0
+    C.form_count = 0
+    Accessibility.colors = {}
 
     // init floor
     C.plane({
@@ -50,6 +53,7 @@
 
     this.buildWall()
     Coil.updateCheatSheet(this.m)
+    Accessibility.update()
   }
 
   this.buildWall = () => {
@@ -107,26 +111,30 @@
             this.m[i] = [C.sprite({ y, x, w: CELL_SIZE, h: CELL_SIZE, d: CELL_SIZE, html: "🕳", css: "hole" }), cellType, b, bd]
             break
           case CELL.sphere:
-            this.m[i] = [C.sphere({ y, x, w: ICELL_SIZE, d: ICELL_SIZE, h: ICELL_SIZE, b, css: `${d} sphere` }), cellType, b, bd]
+            this.m[i] = [C.sphere({ y, x, w: ICELL_SIZE, d: ICELL_SIZE, h: ICELL_SIZE, b, css: `form${C.form_count} ${d} sphere` }), cellType, b, bd, C.form_count]
             break
           case CELL.rect:
-            this.m[i] = [C.cube({ y, x, w: ICELL_SIZE, d: ICELL_SIZE * 0.5, h: ICELL_SIZE * 0.5, b, css: `${d} cube`, r: 0 }), cellType, b, bd]
+            this.m[i] = [C.cube({ y, x, w: ICELL_SIZE, d: ICELL_SIZE * 0.5, h: ICELL_SIZE * 0.5, b, css: `form${C.form_count} ${d} cube`, r: 0 }), cellType, b, bd, C.form_count]
             break
           case CELL.rrect:
-            this.m[i] = [C.cube({ y, x, w: ICELL_SIZE, d: ICELL_SIZE * 0.5, h: ICELL_SIZE * 0.5, b, css: `${d} cube`, r: 2 }), cellType, b, bd]
+            this.m[i] = [C.cube({ y, x, w: ICELL_SIZE, d: ICELL_SIZE * 0.5, h: ICELL_SIZE * 0.5, b, css: `form${C.form_count} ${d} cube`, r: 2 }), cellType, b, bd, C.form_count]
             break
           case CELL.pyramid:
-            this.m[i] = [C.pyramid({ y, x, w: ICELL_SIZE, d: ICELL_SIZE, h: ICELL_SIZE, css: `${d} pyramid`, b, r: 0 }), cellType, b, bd]
+            this.m[i] = [C.pyramid({ y, x, w: ICELL_SIZE, d: ICELL_SIZE, h: ICELL_SIZE, css: `form${C.form_count} ${d} pyramid`, b, r: 0 }), cellType, b, bd, C.form_count]
             break
           case CELL.cone:
-            this.m[i] = [C.pyramid({ y, x, w: ICELL_SIZE, d: ICELL_SIZE, h: ICELL_SIZE, css: `${d} pyramid`, b, r: 40 }), cellType, b, bd]
+            this.m[i] = [C.pyramid({ y, x, w: ICELL_SIZE, d: ICELL_SIZE, h: ICELL_SIZE, css: `form${C.form_count} ${d} pyramid`, b, r: 40 }), cellType, b, bd, C.form_count]
             break
           case CELL.cube:
-            this.m[i] = [C.cube({ y, x, w: ICELL_SIZE, d: ICELL_SIZE, h: ICELL_SIZE, b, css: `${d} cube`, r: 0 }), cellType, b, bd]
+            this.m[i] = [C.cube({ y, x, w: ICELL_SIZE, d: ICELL_SIZE, h: ICELL_SIZE, b, css: `form${C.form_count} ${d} cube`, r: 0 }), cellType, b, bd, C.form_count]
             break
           case CELL.rcube:
-            this.m[i] = [C.cube({ y, x, w: ICELL_SIZE, d: ICELL_SIZE, h: ICELL_SIZE, b, css: `${d} cube`, r: 2 }), cellType, b, bd]
+            this.m[i] = [C.cube({ y, x, w: ICELL_SIZE, d: ICELL_SIZE, h: ICELL_SIZE, b, css: `form${C.form_count} ${d} cube`, r: 2 }), cellType, b, bd, C.form_count]
             break
+        }
+        if (cellType > 0) {
+          const form = C.form_count++
+          Accessibility.colors[form] = b
         }
         break
     }
@@ -134,7 +142,7 @@
 
   this.canInteract = (from, to) => {
     if ([-1, -9].includes(this.g(to)) || [-1, -8].includes(this.g(from))) return false
-    let [[n1, c1, b1], [n2, c2, b2, d]] = [this.g(from), this.g(to)]
+    let [[n1, c1, b1, d1, f1], [n2, c2, b2, d, f2]] = [this.g(from), this.g(to)]
     var s = this
     var pushed = false
     if (c1 === c2) {
@@ -145,14 +153,19 @@
             Sounds.destroy()
             ;[C.$(n1), C.$(n2)].forEach(elt => elt && elt.parentNode.removeChild(elt))
             s.m[s.c(to)] = 0
+            delete Accessibility.colors[f1]
+            delete Accessibility.colors[f2]
           } else {
             Sounds.merge()
             // remove node
             ;[C.$(n1), C.$(n2)].forEach(elt => elt && elt.parentNode.removeChild(elt))
+            delete Accessibility.colors[f1]
+            delete Accessibility.colors[f2]
             // merge color + create new
             s.createNode(to, c2, d, addRGB(b1, b2))
           }
           Coil.updateCheatSheet(s.m)
+          Accessibility.update()
         }, 100)
         pushed = true
       }
@@ -163,12 +176,16 @@
           if (c2 === CELL.hole) {
             Sounds.destroy()
             ;[C.$(n1)].forEach(elt => elt && elt.parentNode.removeChild(elt))
+            delete Accessibility.colors[f1]
           } else {
             Sounds.merge()
             ;[C.$(n1), C.$(n2)].forEach(elt => elt && elt.parentNode.removeChild(elt))
+            delete Accessibility.colors[f1]
+            delete Accessibility.colors[f2]
             s.createNode(to, mergeGeo(c1, c2), d, addRGB(b1, b2))
           }
           Coil.updateCheatSheet(s.m)
+          Accessibility.update()
         }, 100)
         pushed = true
       }

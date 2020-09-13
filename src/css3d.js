@@ -13,6 +13,7 @@
   cube_count: 0,
   sphere_count: 0,
   pyramid_count: 0,
+  form_count: 0,
   options: {},
 
   $: t => self[t],
@@ -46,33 +47,27 @@
       (C.options[t.n] = t)
   },
   group: t => {
-    t.d || t.d === 0 || (t.d = t.h),
-      C.init(t),
-      (C.$(t.g).innerHTML += `<div id="${t.n}"class="group ${t.css}"style="position:absolute;width:${t.w}${C.unit};height:${t.d}${C.unit};transform:${C.tr(t)}">`)
+    t.d || t.d === 0 || (t.d = t.h), C.init(t)
+    const annotate = ["wall", "exit", "hole"].some(v => t.css.includes(v)) ? "" : `<div class="annotate">${t.css.match(/form(\d+)/)[1]}</div>`
+    C.$(t.g).innerHTML += `<div id="${t.n}"class="group ${t.css}"style="position:absolute;width:${t.w}${C.unit};height:${t.d}${C.unit};transform:${C.tr(t)}">${annotate}`
   },
   plane: t => {
     const rstyle = `box-shadow: inset 0 0 ${t.r}${C.unit} ${pSBC(-0.6, t.b)};border-radius: ${t.r}${C.unit};`
-    t.n || (t.n = `plane${C.plane_count++}`),
-      C.init(t),
-      (C.$(t.g).innerHTML += `<div id="${t.n}"class="plane ${t.css}"style="${rstyle}position:absolute;width:${t.w}${C.unit};height:${t.h}${C.unit};background:${
-        t.b
-      };transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`)
+    t.n || (t.n = `plane${C.plane_count++}`), C.init(t), (C.$(t.g).innerHTML += `<div id="${t.n}"class="plane ${t.css}"style="${rstyle}position:absolute;width:${t.w}${C.unit};height:${t.h}${C.unit};background:${t.b};transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`)
     return t.n
   },
   circle: t => {
     t.n || (t.n = `circle${C.circle_count++}`),
       C.init(t),
-      (C.$(t.g).innerHTML += `<div id="${t.n}"class="circle ${t.css}"style="position:absolute;width:${t.w}${C.unit};height:${t.h}${
-        C.unit
-      };background: radial-gradient(circle at ${t.h / 2}${C.unit} ${t.h / 2}${C.unit}, ${t.b}, ${pSBC(-0.6, t.b)});transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`)
+      (C.$(t.g).innerHTML += `<div id="${t.n}"class="circle ${t.css}"style="position:absolute;width:${t.w}${C.unit};height:${t.h}${C.unit};background: radial-gradient(circle at ${t.h / 2}${C.unit} ${t.h / 2}${C.unit}, ${t.b}, ${pSBC(-0.6, t.b)});transform-origin:${t.o};transform:${C.tr(t)}">${
+        t.html
+      }`)
     return t.n
   },
   sprite: t => {
     t.n || (t.n = `sprite${C.sprite_count++}`),
       C.init(t),
-      (C.$(t.g).innerHTML += `<div id="${t.n}"class="sprite ${t.css}"style="position:absolute;width:${t.w}${C.unit};font-size:${t.h}${C.unit};height:${t.h}${C.unit};background:${
-        t.b
-      };transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
+      (C.$(t.g).innerHTML += `<div id="${t.n}"class="sprite ${t.css}"style="position:absolute;width:${t.w}${C.unit};font-size:${t.h}${C.unit};height:${t.h}${C.unit};background:${t.b};transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
       C.sprites.push(t.n)
     return t.n
   },
@@ -108,9 +103,7 @@
     t && (t.rz || 0 === t.rz) && (C.camRZ = t.rz),
     (C.camX += (Math.random() - 0.5) / 1e3),
     (scene.style.transformOrigin = `${C.camX}${C.unit} ${C.camY}${C.unit}`),
-    (scene.style.transform = `translateX(${-C.camX}${C.unit})translateY(${-C.camY}${C.unit})translateZ(${-C.camZ}${C.unit})rotateX(${C.camRX}deg)rotateY(${C.camRY}deg)rotateZ(${
-      C.camRZ
-    }deg)`),
+    (scene.style.transform = `translateX(${-C.camX}${C.unit})translateY(${-C.camY}${C.unit})translateZ(${-C.camZ}${C.unit})rotateX(${C.camRX}deg)rotateY(${C.camRY}deg)rotateZ(${C.camRZ}deg)`),
     C.sprites)) {
       var n = C.$(C.sprites[r]),
         o = n.style.transform.replace(/ *rotate.*\(.*?deg\)/g, "")
@@ -121,16 +114,8 @@
     if (t.n) {
       var r = C.$(t.n),
         n = C.options[t.n]
-      ;(t.x || 0 === t.x) && (n.x = t.x),
-        (t.y || 0 === t.y) && (n.y = t.y),
-        (t.z || 0 === t.z) && (n.z = t.z),
-        (t.rx || 0 === t.rx) && (n.rx = t.rx),
-        (t.ry || 0 === t.ry) && (n.ry = t.ry),
-        (t.rz || 0 === t.rz) && (n.rz = t.rz),
-        (C.options[t.n] = n),
-        (r.style.transform = C.tr(n))
+      ;(t.x || 0 === t.x) && (n.x = t.x), (t.y || 0 === t.y) && (n.y = t.y), (t.z || 0 === t.z) && (n.z = t.z), (t.rx || 0 === t.rx) && (n.rx = t.rx), (t.ry || 0 === t.ry) && (n.ry = t.ry), (t.rz || 0 === t.rz) && (n.rz = t.rz), (C.options[t.n] = n), (r.style.transform = C.tr(n))
     }
   },
-  tr: t =>
-    `translateX(-50%)translateY(-50%)translateX(${t.x}${C.unit})translateY(${t.y}${C.unit})translateZ(${t.z}${C.unit})rotateX(${t.rx}deg)rotateY(${t.ry}deg)rotateZ(${t.rz}deg)scaleX(${t.sx})scaleY(${t.sy})scaleZ(${t.sz})`
+  tr: t => `translateX(-50%)translateY(-50%)translateX(${t.x}${C.unit})translateY(${t.y}${C.unit})translateZ(${t.z}${C.unit})rotateX(${t.rx}deg)rotateY(${t.ry}deg)rotateZ(${t.rz}deg)scaleX(${t.sx})scaleY(${t.sy})scaleZ(${t.sz})`
 }

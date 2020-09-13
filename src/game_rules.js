@@ -15,6 +15,13 @@ const hex2dec = v => parseInt(v, 16)
 const hexColor = v => (v.length === 1 ? `${v}${v}` : v)
 const shexRegex = /[\da-z]{2}/gi
 const thexRegex = /[\da-z]{1}/gi
+const round = (v, d) => Math.round(v * d) / d
+
+hex2rgb = v => {
+  var b1 = v.match(v.length < 5 ? thexRegex : shexRegex)
+  c = b1.map(c => `${round(hex2dec(hexColor(c)) / 255, 2)}`)
+  return c
+}
 
 addRGB = (c1, c2) => {
   var b1 = c1.match(c1.length < 5 ? thexRegex : shexRegex)

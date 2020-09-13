@@ -13,7 +13,7 @@ const TIPS_LEVEL = [3, 5, 13]
 
 // Mobile inputs
 const MOBILE_ARROWS = { l: "⇦", u: "⇧", r: "⇨", d: "⇩" }
-const MOBILE_EXTRA = { keyr: "R", keyh: "H", backquote: "`" }
+const MOBILE_EXTRA = { keyr: "R", keyh: "H", keyi: "I", backquote: "`" }
 
 // Trophies to unlock
 const TROPHIES = {

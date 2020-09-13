@@ -84,3 +84,23 @@
   transform: translateZ(-1vmin);
   z-index: -1;
 }
+
+.annotate {
+  position: absolute;
+  font-size: 3vmin;
+  color: #fff;
+  font-family: monospace;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  visibility: hidden !important;
+
+  top: 25%;
+  left: 25%;
+  right: 25%;
+  bottom: 25%;
+  z-index: 1;
+  transform: translateZ(5vmin);
+}
+
+.accessibility .annotate {
+  visibility: visible !important;
+}

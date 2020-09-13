@@ -5,6 +5,7 @@ WASD / Arrows : Movement
 R : Restart level
 M : Mute Sound
 H : Help
+I : Color Accessibility
 \` : Toggle console
 ===
 `
