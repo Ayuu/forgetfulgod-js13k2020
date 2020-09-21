@@ -7,6 +7,7 @@ function ConsoleScreen(msg) {
     gbar.style.display = "none"
     colorAccessibility.classList.remove("visible")
     tips.classList.remove("visible")
+    scene.innerHTML = ""
     if (isMobileDevice) {
       if (s === WELCOME_SCREEN) {
         gctrl.style.display = "none"
