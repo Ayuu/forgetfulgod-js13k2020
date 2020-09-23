@@ -1,6 +1,7 @@
 ### Forgetful God
 
 ![screenshot](/screenshots/160x160.png?raw=true)
+![screenshot](/screenshots/combined%20skill%20level.png?raw=true)
 
 #### Story
 
@@ -27,7 +28,7 @@ Come down here and re-arrange the world correctly to make it liveable for the fu
 
 ---
 
-Controls:
+#### Controls:
 
 - WASD / Arrows : Movement
 - R : Restart level
@@ -38,12 +39,13 @@ Controls:
 
 ---
 
-Special Thanks To:
+#### Special Thanks To:
 
 - xem aka Maxime EUZIERE (base of [CSS3D](https://github.com/xem/CSS3Dframework))
 - Twitter / xem ([support](https://github.com/xem/emoji)) ([twemoji](https://github.com/twitter/twemoji))
 - Frank Force ([ZzFX](https://github.com/KilledByAPixel/ZzFX))
 - Keith Clark ([ZzFXM](https://github.com/keithclark/ZzFXM))
+- Ben Clark and Salvatore Previti ([Base of Minify Script](https://github.com/bencoder/js13k-2019))
 
 ---
 
