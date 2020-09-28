@@ -14,15 +14,13 @@
     "JavaScript",
     "jam"
   ],
-  "author": "Ayuu",
+  "author": "Franck Ly",
   "license": "MIT",
   "devDependencies": {
     "archiver": "^3.1.1",
-    "cheerio": "^1.0.0-rc.3",
     "csso": "^3.5.1",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.3.0",
-    "fernandez-polygon-decomposition": "^1.1.1",
     "html-minifier": "^4.0.0",
     "mkdirp": "^0.5.1",
     "mocha": "^8.1.3",
