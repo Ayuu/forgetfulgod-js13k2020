@@ -27,5 +27,8 @@
     "prettier": "^1.18.2",
     "prettysize": "^2.0.0",
     "terser": "^4.3.1"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3"
   }
 }
